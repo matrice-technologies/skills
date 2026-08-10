@@ -94,6 +94,13 @@ fixit widget --project <slug>
 This prints the exact `<script>` tag for that project, with the right key and
 the right host. Use what it prints — do not assemble a URL by hand.
 
+**Copy `src` across verbatim. It is absolute, and it has to stay absolute** —
+do not shorten it to `/widget.js` because that looks tidier. The widget is
+served by the Fixit instance, not by the site it runs on, so a relative path
+404s on any other domain. Worse, the widget derives the API it posts to from
+its own `src`: relativise it and every report is sent to the host page's own
+origin instead of Fixit, which fails silently.
+
 Read its second line carefully. If the project has a **domain** set, feedback is
 only accepted from that domain: the widget will load on `localhost` but every
 submission will be refused. Tell the user this before they test locally.
@@ -137,6 +144,9 @@ repository's convention for such things.
 If the user wants the widget on staging but not in production, gate it on
 whatever environment flag this repository already uses, and say which one you
 used.
+
+Before moving on, read back what you wrote and check the `src` still starts with
+`https://` and matches what `fixit widget` printed.
 
 ### 5. Pin the project
 
