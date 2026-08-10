@@ -13,6 +13,16 @@ npx skills add matrice-technologies/skills
 Works with Claude Code, Cursor, Codex, OpenCode and the rest of the agents the
 [`skills`](https://github.com/vercel-labs/skills) installer supports.
 
+To take one skill rather than everything here:
+
+```bash
+npx skills add matrice-technologies/skills --skill fixit
+```
+
+The path shorthand works too, but note it is relative to the repository root —
+so the `skills/` directory is part of it:
+`npx skills add matrice-technologies/skills/skills/fixit`.
+
 ## What you can then do
 
 | Ask | What happens |
