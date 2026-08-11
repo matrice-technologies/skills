@@ -219,6 +219,12 @@ Read the whole thing before touching code. What matters most:
   against the code before acting on them
 - **element selector** — the DOM node they pointed at; your best lead for finding
   the component in source
+- **the screenshot** — `fixit show` prints a signed URL, good for an hour. Read it
+  when the report is visual or has no note. **Two things in it were drawn by
+  Fixit and are not part of the product:** a blue rectangle marking the element
+  the reporter pointed at, and any red freehand they drew on top. Neither is
+  ever the bug. Do not go looking for a stray blue outline in the code — it does
+  not exist there. Read the rectangle only as "this is the thing they mean"
 - **console errors** — often name the failing file and line outright
 - **failed requests** — a 4xx or 5xx here usually means the bug is server-side,
   not in the component they were looking at
