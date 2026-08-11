@@ -178,7 +178,7 @@ into a `fixit list` and answer from the result. Do not start fixing anything.
 fixit list                          # everything, newest first, across all projects
 fixit list --project truva -n 3     # last 3 from one project
 fixit list --status received        # not yet picked up
-fixit list --kind broken            # broken | suggestion | confusing | other
+fixit list --kind bug               # bug | ui | ux | performance | suggestion | praise | other
 fixit list --search checkout        # matches title or note
 ```
 
@@ -211,7 +211,12 @@ fixit show truva/40
 
 Read the whole thing before touching code. What matters most:
 
-- **the note** — what they expected, and what happened instead
+- **the note** — what they expected, and what happened instead. Many reports
+  have none; that is normal and not a reason to dismiss them
+- **"fixit read this as"** — Fixit's own reading of the report, written by a
+  model from the screenshot and the evidence. It is the only prose on a report
+  sent without a comment. Treat it as a lead, not as fact: verify its claims
+  against the code before acting on them
 - **element selector** — the DOM node they pointed at; your best lead for finding
   the component in source
 - **console errors** — often name the failing file and line outright
