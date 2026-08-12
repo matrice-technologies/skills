@@ -49,8 +49,9 @@ fixit login --begin
 ```
 
 This prints a short code and a URL, then exits. Show the user the URL and ask
-them to open it and approve. On that screen they choose which workspace — and
-optionally which project — this machine may touch.
+them to open it and approve. There is nothing for them to choose on that screen
+— they confirm the code matches, and the machine is then connected to their
+account: every project in every workspace they belong to.
 
 When they say they have approved it:
 
@@ -183,7 +184,13 @@ fixit list --search checkout        # matches title or note
 ```
 
 Listing is newest first, so "the last 3" is `-n 3`. With no `--project` it spans
-every project the token can reach.
+every project the token can reach — which, after `fixit login`, is every project
+in every workspace that person belongs to.
+
+Because a login can span several workspaces, a project slug is not always
+unique. If a command comes back with `project_ambiguous`, it will name the
+workspaces involved; address the project as `workspace-slug/project-slug` to say
+which one you meant. Do not guess.
 
 Answer in prose, with the reference (`truva/40`) for anything worth acting on.
 Use `fixit show <ref>` when the user asks about one report specifically, or when
