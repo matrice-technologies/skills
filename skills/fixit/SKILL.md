@@ -78,6 +78,11 @@ Work through the section above: CLI installed, `fixit whoami` reporting a host.
 fixit projects
 ```
 
+Every project is listed as `workspace/project`, because a login reaches every
+workspace the user belongs to and a project slug is only unique within one.
+**Use that whole string wherever a project is named** — here, in `--project`,
+and in `.env.fixit`. It is unambiguous everywhere, and a bare slug is not.
+
 Show the user the list and **ask which project this repository is**. Do not
 guess from the directory name — one repository often serves a project named
 something else entirely. If exactly one project comes back, confirm it rather
@@ -89,7 +94,7 @@ dashboard first.
 ### 3. Get the snippet
 
 ```bash
-fixit widget --project <slug>
+fixit widget --project <workspace>/<project>
 ```
 
 This prints the exact `<script>` tag for that project, with the right key and
@@ -155,8 +160,14 @@ So later commands do not need `--project`, write `.env.fixit` in the repository
 root:
 
 ```
-FIXIT_PROJECT=<slug>
+FIXIT_PROJECT=<workspace>/<project>
 ```
+
+**Always write both halves**, exactly as `fixit projects` printed them — even
+when the project's name looks unique today. The file outlives the moment: a
+second workspace gaining a project of the same name later would turn a bare
+slug into an error in a repository nobody has touched since. Two words now
+costs nothing and cannot go stale.
 
 Add `.env.fixit` to `.gitignore` if it is not already there.
 
@@ -187,10 +198,14 @@ Listing is newest first, so "the last 3" is `-n 3`. With no `--project` it spans
 every project the token can reach — which, after `fixit login`, is every project
 in every workspace that person belongs to.
 
-Because a login can span several workspaces, a project slug is not always
-unique. If a command comes back with `project_ambiguous`, it will name the
-workspaces involved; address the project as `workspace-slug/project-slug` to say
-which one you meant. Do not guess.
+Name projects as `workspace/project` throughout — that is how `fixit projects`
+prints them and the only form that is unambiguous, since a login spans every
+workspace the user belongs to. A bare slug still works when nothing else shares
+it; when something does, the command fails with `project_ambiguous` and names
+the workspaces involved. Pick from those rather than guessing.
+
+A report is `workspace/project/number` in full — `truva/checkout/40` — and a
+bare `40` works when `.env.fixit` pins the project.
 
 Answer in prose, with the reference (`truva/40`) for anything worth acting on.
 Use `fixit show <ref>` when the user asks about one report specifically, or when
@@ -201,8 +216,10 @@ rather than read.
 
 ## Mode 3 — fix a report
 
-`/fixit truva/40`, or "fix the checkout one". A report is named `project/number`.
-A bare `40` works when `.env.fixit` pins a project.
+`/fixit truva/40`, or "fix the checkout one". A report is named `project/number`,
+or `workspace/project/number` when the project name is shared by more than one
+workspace. A bare `40` works when `.env.fixit` pins a project — which is the
+usual case inside a repository, and why the examples below use it sparingly.
 
 If the user has not said which, list what is waiting and ask:
 
